@@ -119,3 +119,41 @@ const Movie = ({ id, onClose }) => (
   </div>
 );
 ```
+
+
+# Alternative APIs considered
+
+we could try a JSX version:
+
+```jsx
+import { Connect, query } from "urql";
+import makeBlade from "blade.macro";
+
+const MovieQuery = makeBlade() // query is named "MovieQuery"
+const Movie = ({ id, onClose }) => (
+  <div>
+    <Connect
+      query={query(MovieQuery, { id: id })}
+      children={({ loaded, data }) => {
+        return (
+          <MovieQuery movie={id}>
+            {data => (
+              <div className="modal">
+                {loaded === false ? (
+                  <p>Loading</p>
+                ) : (
+                  <div>
+                    <h2>{data.movie.title}</h2>
+                    <p>{data.movie.description}</p>
+                    <button onClick={onClose}>Close</button>
+                  </div>
+                )}
+              </div>
+            )}
+          </MovieQuery>
+        );
+      }}
+    />
+  </div>
+);
+```
