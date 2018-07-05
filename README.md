@@ -102,14 +102,15 @@ const Movie = ({ id, onClose }) => (
         }
       `, { id: id })}
       children={({ loaded, data }) => {
+        const movie = data.movie
         return (
           <div className="modal">
             {loaded === false ? (
               <p>Loading</p>
             ) : (
               <div>
-                <h2>{data.movie.title}</h2>
-                <p>{data.movie.description}</p>
+                <h2>{movie.title}</h2>
+                <p>{movie.description}</p>
                 <button onClick={onClose}>Close</button>
               </div>
             )}
