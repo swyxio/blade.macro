@@ -1,6 +1,6 @@
 # blade.macro
 
-this is a macro for solving the "double declaration problem" in GraphQL queries. (mutations might be tackled some other day).
+this is a macro (read about [babel-plugin-macros](https://github.com/kentcdodds/babel-plugin-macros) if you are not familiar) for solving the "double declaration problem" in GraphQL queries. (mutations might be tackled some other day).
 
 > **What is the "double declaration problem"?** Simply it is the bad developer experience of having to declare what you want to query in the GraphQL template string, and then again when you are using the data in your application. Ommissions are confusing to debug and overfetching due to stale queries is also a problem.
 
