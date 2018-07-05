@@ -59,14 +59,14 @@ Using `blade.macro`, you can now write:
 import { Connect, query } from "urql";
 import makeBlade from "blade.macro";
 
-const blade = makeBlade('Movie', {id: "String"}) //optional naming
+const blade = makeBlade('Movie', {$id: "String"}) //optional naming
 const Movie = ({ id, onClose }) => (
   <div>
     <Connect
       query={query(blade, { id: id })} // `blade` becomes a query string
       children={({ loaded, data }) => {
         blade(data) // gets compiled away
-        const movie = data.movie({ id }) // data.movie() also becomes a blade
+        const movie = data.movie({ id: '$id' }) // data.movie() also becomes a blade
         return (
           <div className="modal">
             {loaded === false ? (
@@ -124,6 +124,31 @@ const Movie = ({ id, onClose }) => (
 
 a key insight that makes this work is that graphql data objects are never functions, so we can overload the "blade" as a function call to parallel the graphql function.
 
+
+# Babel strategy
+
+How we execute this code is a challenging task.
+
+There are four big aspects to take care of:
+
+- `makeBlade(name, args)` should tag the identifier it is assigned to (e.g. `blade`) as a special identifier. This is the start of the GraphQL query.
+- when `blade(foo)` is called on `foo`, it tags `foo` as a "blade", which is a piece of a GraphQL query. any descendants of a blade are also blades
+- blades can be called as functions to supply arguments to the blade
+- wherever `blade` is referenced as a variable, the final GraphQL query is to be inserted
+
+# Things to consider
+
+accounting for as much of the [graphql spec](https://graphql.org/learn/queries/) as possible
+
+-[ ] how to incorporate fragments?
+-[x] [operation name](https://graphql.org/learn/queries/#operation-name)
+-[x] nested function queries
+-[x] aliases
+-[x] query variables '$'
+-[ ] directives
+-[ ] [meta fields](https://graphql.org/learn/queries/#meta-fields)
+
+---
 
 # Alternative APIs considered
 
