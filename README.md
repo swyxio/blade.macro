@@ -6,7 +6,7 @@ this is a macro (read about [babel-plugin-macros](https://github.com/kentcdodds/
 
 ## Example
 
-Here is a typical graphql query using [urql](https://codesandbox.io/s/p5n69p23x0):
+Here is a typical graphql query using [urql](https://codesandbox.io/s/p5n69p23x0) (taken [straight from urql's docs](https://github.com/FormidableLabs/urql#getting-started)):
 
 ```jsx
 import { Connect, query } from "urql";
