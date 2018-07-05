@@ -129,11 +129,12 @@ a key insight that makes this work is that graphql data objects are never functi
 
 How we execute this code is a challenging task.
 
-There are four big aspects to take care of:
+There are five big aspects to take care of:
 
 - `makeBlade(name, args)` should tag the identifier it is assigned to (e.g. `blade`) as a special identifier. This is the start of the GraphQL query.
 - when `blade(foo)` is called on `foo`, it tags `foo` as a "blade", which is a piece of a GraphQL query. any descendants of a blade are also blades
 - blades can be called as functions to supply arguments to the blade
+- assignments create aliases!
 - wherever `blade` is referenced as a variable, the final GraphQL query is to be inserted
 
 # Things to consider
