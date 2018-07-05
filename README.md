@@ -140,13 +140,13 @@ There are four big aspects to take care of:
 
 accounting for as much of the [graphql spec](https://graphql.org/learn/queries/) as possible
 
--[ ] how to incorporate fragments?
--[x] [operation name](https://graphql.org/learn/queries/#operation-name)
--[x] nested function queries
--[x] aliases
--[x] query variables '$'
--[ ] directives
--[ ] [meta fields](https://graphql.org/learn/queries/#meta-fields)
+- [ ] how to incorporate fragments?
+- [x] [operation name](https://graphql.org/learn/queries/#operation-name)
+- [x] nested function queries
+- [x] aliases
+- [x] query variables '$'
+- [ ] directives
+- [ ] [meta fields](https://graphql.org/learn/queries/#meta-fields)
 
 ---
 
