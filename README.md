@@ -59,21 +59,22 @@ you see how `title` and `description` are specified twice, while `poster` and `g
 import { Connect, query } from "urql";
 import makeBlade from "blade.macro";
 
-const blade = makeBlade('Movie', {movie: {id: "String"}})
+const blade = makeBlade('Movie', {id: "String"}) //optional naming
 const Movie = ({ id, onClose }) => (
   <div>
     <Connect
       query={query(blade, { id: id })} // `blade` becomes a query string
       children={({ loaded, data }) => {
         blade(data) // gets compiled away
+        const movie = data.movie({ id }) // this also becomes a blade
         return (
           <div className="modal">
             {loaded === false ? (
               <p>Loading</p>
             ) : (
               <div>
-                <h2>{data.movie.title}</h2>
-                <p>{data.movie.description}</p>
+                <h2>{movie.title}</h2>
+                <p>{movie.description}</p>
                 <button onClick={onClose}>Close</button>
               </div>
             )}
