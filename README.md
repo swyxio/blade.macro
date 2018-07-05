@@ -52,7 +52,7 @@ const Movie = ({ id, onClose }) => (
 
 you see how `title` and `description` are specified twice, while `poster` and `genre` aren't even used. 
 
-`blade.macro` would turn the query into:
+Using `blade.macro`, you can now write:
 
 
 ```jsx
@@ -66,7 +66,7 @@ const Movie = ({ id, onClose }) => (
       query={query(blade, { id: id })} // `blade` becomes a query string
       children={({ loaded, data }) => {
         blade(data) // gets compiled away
-        const movie = data.movie({ id }) // this also becomes a blade
+        const movie = data.movie({ id }) // data.movie() also becomes a blade
         return (
           <div className="modal">
             {loaded === false ? (
@@ -86,7 +86,7 @@ const Movie = ({ id, onClose }) => (
 );
 ```
 
-This compiles to:
+This transpiles to:
 
 ```jsx
 import { Connect, query } from "urql";
@@ -121,6 +121,8 @@ const Movie = ({ id, onClose }) => (
   </div>
 );
 ```
+
+a key insight that makes this work is that graphql data objects are never functions, so we can overload the "blade" as a function call to parallel the graphql function.
 
 
 # Alternative APIs considered
