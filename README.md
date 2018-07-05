@@ -65,8 +65,8 @@ const Movie = ({ id, onClose }) => (
     <Connect
       query={query(blade, { id: id })} // `blade` becomes a query string
       children={({ loaded, data }) => {
-        blade(data) // gets compiled away
-        const movie = data.movie({ id: '$id' }) // data.movie() also becomes a blade
+        blade(data) // mark `data` as a blade, gets transpiled away
+        const movie = data.movie({ id: '$id' }) // `movie` is an alias, data.movie() has args
         return (
           <div className="modal">
             {loaded === false ? (
@@ -95,7 +95,7 @@ const Movie = ({ id, onClose }) => (
     <Connect
       query={query(`
         query Movie($id: String) {
-          movie(id: $id) {
+          movie: movie(id: $id) {
             title,
             description
           }
