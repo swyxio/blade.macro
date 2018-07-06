@@ -4,7 +4,7 @@ this is a macro (read about [babel-plugin-macros](https://github.com/kentcdodds/
 
 > **What is the "double declaration problem"?** Simply it is the bad developer experience of having to declare what you want to query in the GraphQL template string, and then again when you are using the data in your application. Ommissions are confusing to debug and overfetching due to stale queries is also a problem.
 
-## Example
+## Problem Statement
 
 Here is a typical graphql query using [urql](https://codesandbox.io/s/p5n69p23x0) (taken [straight from urql's docs](https://github.com/FormidableLabs/urql#getting-started)):
 
@@ -52,6 +52,8 @@ const Movie = ({ id, onClose }) => (
 
 you see how `title` and `description` are specified twice, while `poster` and `genre` aren't even used. 
 
+## Example Input
+
 Using `blade.macro`, you can now write:
 
 
@@ -84,6 +86,8 @@ const Movie = ({ id, onClose }) => (
   </div>
 );
 ```
+
+## Example Output
 
 This transpiles to:
 
