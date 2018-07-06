@@ -57,16 +57,15 @@ Using `blade.macro`, you can now write:
 
 ```jsx
 import { Connect, query } from "urql";
-import makeBlade from "blade.macro";
+import { bladeQuery, BQL } from "blade.macro";
 
-const blade = makeBlade('Movie', {$id: "String"}) //optional naming
 const Movie = ({ id, onClose }) => (
   <div>
     <Connect
-      query={query(blade, { id: id })} // `blade` becomes a query string
+      query={query(BQL, { id: id })} // `blade` becomes a query string
       children={({ loaded, data }) => {
-        blade(data) // mark `data` as a blade, gets transpiled away
-        const movie = data.movie({ id: '$id' }) // `movie` is an alias, data.movie() has args
+        const DATA = bladeQuery(data, {$id: "String"}) // mark `data` as a blade, names Movie, passes params
+        const movie = DATA.movie({ id: '$id' }) // `movie` is an alias, data.movie() has args
         return (
           <div className="modal">
             {loaded === false ? (
@@ -122,7 +121,10 @@ const Movie = ({ id, onClose }) => (
 );
 ```
 
-a key insight that makes this work is that graphql data objects are never functions, so we can overload the "blade" as a function call to parallel the graphql function.
+a key insight that makes this work:
+
+- graphql data objects are never functions, so we can overload the "blade" as a function call to pass arguments to our graphql queries.
+- aliases must be globally unique, just like variable declarations...
 
 
 # Babel strategy
