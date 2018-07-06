@@ -62,10 +62,10 @@ import { bladeQuery, BQL } from "blade.macro";
 const Movie = ({ id, onClose }) => (
   <div>
     <Connect
-      query={query(BQL, { id: id })} // `blade` becomes a query string
+      query={query(BQL, { id: id })} // `BQL` becomes a query string
       children={({ loaded, data }) => {
-        const DATA = bladeQuery(data, {$id: "String"}) // mark `data` as a blade, names Movie, passes params
-        const movie = DATA.movie({ id: '$id' }) // `movie` is an alias, data.movie() has args
+        const DATA = bladeQuery(data, {$id: "String"}) // initialize DATA as a blade, names Movie, passes params
+        const movie = DATA.movie({ id: '$id' }) // `movie` is an alias, data.movie() has args. `movie` is also a blade now
         return (
           <div className="modal">
             {loaded === false ? (
