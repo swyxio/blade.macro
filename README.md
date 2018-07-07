@@ -58,24 +58,24 @@ Using `blade.macro`, you can now write:
 
 
 ```jsx
-import { Connect, query } from "urql";
-import { bladeQuery, BQL } from "blade.macro";
+import { Connect, query } from 'urql';
 
+const movieQuery = createRazor() // doesnt take arguments for now
 const Movie = ({ id, onClose }) => (
   <div>
     <Connect
-      query={query(BQL, { id: id })} // `BQL` becomes a query string
+      query={query(movieQuery, { id: id })} // razor transpiles into a query string
       children={({ loaded, data }) => {
-        const DATA = bladeQuery(data, {$id: "String"}) // initialize DATA as a blade, names Movie, passes params
-        const movie = DATA.movie({ id: '$id' }) // `movie` is an alias, data.movie() has args. `movie` is also a blade now
+        const DATA = movieQuery(data) // razor(foobar) initializes DATA as a blade, names query as DATA
+        const movie = DATA.movie // `movie` is an alias. `movie` is also a blade now
         return (
           <div className="modal">
             {loaded === false ? (
               <p>Loading</p>
             ) : (
               <div>
-                <h2>{movie.title}</h2>
-                <p>{movie.description}</p>
+                <h2>{movie.test.title}</h2>
+                <p>{movie.monkey.chimp.description}</p>
                 <button onClick={onClose}>Close</button>
               </div>
             )}
@@ -92,28 +92,23 @@ const Movie = ({ id, onClose }) => (
 This transpiles to:
 
 ```jsx
-import { Connect, query } from "urql";
+import { Connect, query } from 'urql';
+
 const Movie = ({ id, onClose }) => (
   <div>
     <Connect
-      query={query(`
-        query Movie($id: String) {
-          movie: movie(id: $id) {
-            title,
-            description
-          }
-        }
-      `, { id: id })}
+      query={query("query DATA { movie { test { title }, monkey { chimp { description }}}}", { id: id })} // razor transpiles into a query string
       children={({ loaded, data }) => {
-        const movie = data.movie
+        const DATA = data // razor(foobar) initializes DATA as a blade, names query as DATA
+        const movie = DATA.movie // `movie` is an alias. `movie` is also a blade now
         return (
           <div className="modal">
             {loaded === false ? (
               <p>Loading</p>
             ) : (
               <div>
-                <h2>{movie.title}</h2>
-                <p>{movie.description}</p>
+                <h2>{movie.test.title}</h2>
+                <p>{movie.monkey.chimp.description}</p>
                 <button onClick={onClose}>Close</button>
               </div>
             )}
