@@ -143,6 +143,26 @@ There are five big aspects to take care of:
 - assignments create aliases!
 - wherever `blade` is referenced as a variable, the final GraphQL query is to be inserted
 
+# What is a razor?
+
+The job of a razor is:
+
+- if a simple reference, to replace as a graphql query string
+- if called, to make the assigned identifier into a blade. optionally passing along the query params.
+
+One razor, many blades.
+
+# What is a blade?
+
+The job of a blade is:
+
+- if the property is called as a function, add those arguments to the set
+- if a property is accessed, add it to the graphql set
+- if the property is assigned, make it an alias
+  - search scope for more references, recursively
+
+The name comes from "roller blade", also known as inline skates. The inspiration comes from a boss who described this as "inline GraphQL". But also it just sounds cool so there we go.
+
 # Things to consider
 
 accounting for as much of the [graphql spec](https://graphql.org/learn/queries/) as possible
