@@ -1,3 +1,5 @@
+> this idea is in development in https://github.com/sw-yx/babel-blade, head over to check it out
+
 # blade.macro
 
 this is a macro (read about [babel-plugin-macros](https://github.com/kentcdodds/babel-plugin-macros) if you are not familiar) for solving the "double declaration problem" in GraphQL queries. (mutations might be tackled some other day).
